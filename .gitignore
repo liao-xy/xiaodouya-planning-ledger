@@ -15,3 +15,7 @@ server/target/
 outputs/
 work/
 *.log
+
+# 本地转码中断产生的临时文件；提交使用 xiaodouya-demo-video.mp4。
+docs/demo/xiaodouya-demo.mp4
+docs/demo/xiaodouya-demo-final.mp4

@@ -16,7 +16,15 @@ const money = value => Number(value || 0).toFixed(2)
 async function load(){ try { const [planRows, data] = await Promise.all([api('/plans'),api('/dashboard')]); plans.value=planRows; dashboard.value=data } catch(error) { uni.showToast({title:error?.message || '计划加载失败',icon:'none'}) } }
 function startEdit(plan){ editingId.value=plan.id; form.value={name:plan.name,budget:String(plan.budget),deadline:plan.deadline || ''}; uni.pageScrollTo({scrollTop:0,duration:200}) }
 function cancelEdit(){ editingId.value=null; form.value={name:'',budget:'',deadline:''} }
-async function save(){ if(!form.value.name||!Number(form.value.budget))return uni.showToast({title:'请填写名称和分配金额',icon:'none'}); try { const path=editingId.value?`/plans/${editingId.value}`:'/plans'; await api(path,{method:editingId.value?'PUT':'POST',data:{...form.value,budget:Number(form.value.budget),color:'sage'}}); cancelEdit(); await load(); uni.showToast({title:'计划已保存'}) } catch(error) { uni.showToast({title:error?.message || '无法保存计划',icon:'none'}) } }
+async function save(){
+  const budget=Number(form.value.budget)
+  if(!form.value.name||!budget)return uni.showToast({title:'请填写名称和分配金额',icon:'none'})
+  const current=editingId.value?plans.value.find(item=>item.id===editingId.value):null
+  const additional=current ? budget-Number(current.budget || 0) : budget
+  if(!editingId.value && Number(dashboard.value.walletBalance || 0)<=0)return uni.showToast({title:'请先记一笔收入，再分配资金计划',icon:'none'})
+  if(additional>Number(dashboard.value.unallocated || 0))return uni.showToast({title:`尚可分配 ¥${money(dashboard.value.unallocated)}，金额过高`,icon:'none'})
+  try { const path=editingId.value?`/plans/${editingId.value}`:'/plans'; await api(path,{method:editingId.value?'PUT':'POST',data:{...form.value,budget,color:'sage'}}); cancelEdit(); await load(); uni.showToast({title:'计划已保存'}) } catch(error) { uni.showToast({title:error?.message || '无法保存计划',icon:'none'}) }
+}
 function remove(plan){ uni.showModal({title:`删除“${plan.name}”？`,content:'历史账单会保留，但不再归入该计划；删除后无法恢复。',confirmColor:'#b56f55',success:async result=>{if(!result.confirm)return;try{await api(`/plans/${plan.id}`,{method:'DELETE'});if(editingId.value===plan.id)cancelEdit();await load();uni.showToast({title:'已删除'})}catch(error){uni.showToast({title:error?.message || '删除失败',icon:'none'})}}}) }
 onShow(load)
 </script>
