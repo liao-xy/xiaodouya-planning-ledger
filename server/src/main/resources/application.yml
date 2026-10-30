@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:guihua;MODE=MySQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  h2:
+    console:
+      enabled: true
+  jackson:
+    default-property-inclusion: non_null
+server:
+  port: 8080
+app:
+  wechat:
+    app-id: ${WECHAT_APP_ID:}
+    app-secret: ${WECHAT_APP_SECRET:}
+  ai:
+    # 优先读取项目变量 BAILIAN_API_KEY；也兼容百炼官方示例使用的 DASHSCOPE_API_KEY。
+    # 仅在服务端配置，绝不能放进 uni-app 前端代码。
+    bailian-api-key: ${BAILIAN_API_KEY:${DASHSCOPE_API_KEY:}}
+    base-url: ${BAILIAN_BASE_URL:https://dashscope.aliyuncs.com/compatible-mode/v1}
+    model: ${BAILIAN_MODEL:qwen3.8-flash}
+  compliance:
+    # 正式发布前须填写经核准的真实信息；不可用演示值替代。
+    filing-number: ${APP_ICP_FILING_NO:}
+    operator-name: ${APP_OPERATOR_NAME:}
+    service-email: ${APP_SERVICE_EMAIL:}
+    service-phone: ${APP_SERVICE_PHONE:}

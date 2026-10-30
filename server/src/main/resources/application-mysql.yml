@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      # 黑客松阶段自动维护表结构；正式上线前应改为 validate 并使用 Flyway 管理迁移。
+      ddl-auto: update
+  h2:
+    console:
+      enabled: false

@@ -1,0 +1,11 @@
+{
+    "name" : "小兜芽",
+    "appid" : "__UNI__1C00781",
+    "description" : "规划型记账",
+    "versionName" : "0.1.0",
+    "versionCode" : 100,
+    "mp-weixin" : {
+        "appid" : "wx96e660d2b21b264e"
+    },
+    "vueVersion" : "3"
+}

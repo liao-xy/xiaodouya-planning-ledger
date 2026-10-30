@@ -1,0 +1,17 @@
+# 密钥及本地运行配置不得提交
+.env
+.env.*
+!.env.example
+application-local.yml
+application-local.yaml
+
+# 构建产物、IDE 文件及演示过程文件
+node_modules/
+mobile/node_modules/
+mobile/dist/
+server/target/
+.idea/
+.vscode/
+outputs/
+work/
+*.log
