@@ -2,6 +2,8 @@
 
 黑客松 MVP：先为钱分配用途，再记录消费如何影响计划。
 
+评审可直接阅读 [项目说明文档](docs/project-documentation.md)、[作品提交文案](docs/submission-copy.md) 与 [演示视频脚本](docs/demo-script.md)。
+
 ## 目录
 
 - `server/`：Spring Boot 3 + H2 的 REST API，预留 MySQL、阿里云百炼接入。
